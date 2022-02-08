@@ -16,6 +16,9 @@ public class Joueur {
   private final String nom;
   public final InterfaceJoueur interfaceJoueur;
   private final Main main = Main.vide();
+  private Equipe equipe;
+  public Equipe getEquipe(){return equipe;}
+  public void setEquipe(Equipe eq){equipe = eq;}
 
   public Joueur(String nom, InterfaceJoueur interfaceJoueur) {
     this.nom = nom;

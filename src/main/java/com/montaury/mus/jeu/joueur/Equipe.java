@@ -16,6 +16,8 @@ public class Equipe {
         this.joueur1 = j1;
         this.joueur2 = j2;
         this.num = i;
+        j1.setEquipe(this);
+        j2.setEquipe(this);
     }
 
     public Joueur getJoueur1() {

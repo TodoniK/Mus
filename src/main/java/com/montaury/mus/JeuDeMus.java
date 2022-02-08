@@ -14,6 +14,7 @@ public class JeuDeMus {
     var joueurHumain = Joueur.humain(nomJoueur);
     var equipe1 = new Equipe (1, joueurHumain, Joueur.ordinateur("OrdinateurAllié"));
     var equipe2 = new Equipe (2, Joueur.ordinateur("OrdinateurAdverse1"), Joueur.ordinateur("OrdinateurAdverse2"));
+
     var partie = new Partie(new AffichageEvenements(joueurHumain));
     var resultat = partie.jouer(new Opposants(equipe1, equipe2));
 

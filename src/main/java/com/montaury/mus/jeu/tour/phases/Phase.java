@@ -2,6 +2,7 @@ package com.montaury.mus.jeu.tour.phases;
 
 import com.montaury.mus.jeu.Manche;
 import com.montaury.mus.jeu.evenements.Evenements;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.joueur.Main;
 import com.montaury.mus.jeu.Opposants;
@@ -32,7 +33,7 @@ public abstract class Phase {
     }
     if (participants.estUnique()) {
       Joueur premier = participants.premier();
-      return Phase.Resultat.termine(premier, 0, pointsBonus(premier));
+      return Phase.Resultat.termine(premier.getEquipe(), 0, pointsBonus(premier));
     }
     var resultat = new Dialogue(affichage).derouler(participants);
     return conclure(resultat, participants);
@@ -41,14 +42,14 @@ public abstract class Phase {
   private Resultat conclure(Dialogue.Recapitulatif dialogue, Participants participants) {
     if (dialogue.terminePar(TIRA)) {
       var joueurEmportantLaMise = dialogue.dernierJoueurAyantMise();
-      return Phase.Resultat.termine(joueurEmportantLaMise, dialogue.pointsEngages(), pointsBonus(joueurEmportantLaMise));
+      return Phase.Resultat.termine(joueurEmportantLaMise.getEquipe(), dialogue.pointsEngages(), pointsBonus(joueurEmportantLaMise));
     }
     var vainqueur = meilleurParmi(participants);
     if (dialogue.terminePar(KANTA)) {
-      return Phase.Resultat.termine(vainqueur, Manche.Score.POINTS_POUR_TERMINER_MANCHE, 0);
+      return Phase.Resultat.termine(vainqueur.getEquipe(), Manche.Score.POINTS_POUR_TERMINER_MANCHE, 0);
     }
     var bonus = pointsBonus(vainqueur);
-    return Phase.Resultat.termine(vainqueur, 0, bonus + (dialogue.terminePar(PASO) && bonus != 0 ? 0 : dialogue.pointsEngages()));
+    return Phase.Resultat.termine(vainqueur.getEquipe(), 0, bonus + (dialogue.terminePar(PASO) && bonus != 0 ? 0 : dialogue.pointsEngages()));
   }
 
   public Participants participantsParmi(Opposants opposants) {
@@ -84,21 +85,21 @@ public abstract class Phase {
       return new Resultat(null, 0, 0);
     }
 
-    public static Resultat termine(Joueur vainqueur, int pointsImmediats, int pointsFinDuTour) {
+    public static Resultat termine(Equipe vainqueur, int pointsImmediats, int pointsFinDuTour) {
       return new Resultat(vainqueur, pointsImmediats, pointsFinDuTour);
     }
 
-    private final Joueur vainqueur;
+    private final Equipe vainqueur;
     public final int pointsImmediats;
     public final int pointsFinDuTour;
 
-    private Resultat(Joueur vainqueur, int pointsImmediats, int pointsFinDuTour) {
+    private Resultat(Equipe vainqueur, int pointsImmediats, int pointsFinDuTour) {
       this.pointsImmediats = pointsImmediats;
       this.vainqueur = vainqueur;
       this.pointsFinDuTour = pointsFinDuTour;
     }
 
-    public Optional<Joueur> vainqueur() {
+    public Optional<Equipe> vainqueur() {
       return Optional.ofNullable(vainqueur);
     }
   }
