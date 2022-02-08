@@ -32,41 +32,41 @@ public class Manche {
     private final Map<Equipe, Integer> scoreParEquipe = new HashMap<>();
 
     public Score(Opposants opposants) {
-      scoreParJoueur.put(opposants.joueurEsku(), 0);
-      scoreParJoueur.put(opposants.joueurZaku(), 0);
+      scoreParEquipe.put(opposants.getEquipe1(), 0);
+      scoreParEquipe.put(opposants.getEquipe2(), 0);
     }
 
-    public Map<Joueur, Integer> scoreParJoueur() {
-      return scoreParJoueur;
+    public Map<Equipe, Integer> scoreParEquipe() {
+      return scoreParEquipe;
     }
 
-    public void scorer(Joueur joueur, int points) {
+    public void scorer(Equipe equipe, int points) {
       if (vainqueur().isEmpty()) {
-        scoreParJoueur.put(joueur, Math.min(scoreParJoueur.get(joueur) + points, POINTS_POUR_TERMINER_MANCHE));
+        scoreParEquipe.put(equipe, Math.min(scoreParEquipe.get(equipe) + points, POINTS_POUR_TERMINER_MANCHE));
       }
     }
 
-    public Optional<Joueur> vainqueur() {
-      return scoreParJoueur.keySet().stream().filter(joueur -> scoreParJoueur.get(joueur) == POINTS_POUR_TERMINER_MANCHE).findAny();
+    public Optional<Equipe> vainqueur() {
+      return scoreParEquipe.keySet().stream().filter(equipe -> scoreParEquipe.get(equipe) == POINTS_POUR_TERMINER_MANCHE).findAny();
     }
 
     public Optional<Integer> pointsVaincu() {
       return vainqueur().isEmpty() ?
         Optional.empty() :
-        scoreParJoueur.values().stream().filter(points -> points < POINTS_POUR_TERMINER_MANCHE).findAny();
+        scoreParEquipe.values().stream().filter(points -> points < POINTS_POUR_TERMINER_MANCHE).findAny();
     }
   }
 
   public static class Resultat {
-    private final Joueur vainqueur;
+    private final Equipe vainqueur;
     private final int pointsVaincu;
 
-    public Resultat(Joueur joueur, int pointsVaincu) {
-      vainqueur = joueur;
+    public Resultat(Equipe equipe, int pointsVaincu) {
+      vainqueur = equipe;
       this.pointsVaincu = pointsVaincu;
     }
 
-    public Joueur vainqueur() {
+    public Equipe vainqueur() {
       return vainqueur;
     }
 

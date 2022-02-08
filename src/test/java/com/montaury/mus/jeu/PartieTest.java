@@ -8,6 +8,8 @@ import com.montaury.mus.jeu.tour.phases.dialogue.choix.Mus;
 import com.montaury.mus.jeu.tour.phases.dialogue.choix.Paso;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.montaury.mus.jeu.joueur.Equipe;
+
 
 import static com.montaury.mus.jeu.joueur.Fixtures.unJoueurFaisantChoix;
 import static org.assertj.core.api.Assertions.assertThat;
