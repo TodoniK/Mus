@@ -24,7 +24,7 @@ public class Mus {
   }
 
   public void jouer(Opposants opposants) {
-    var joueursDansLOrdre = opposants.dansLOrdre();
+    var joueursDansLOrdre = List.of(opposants.dansLOrdre().get(0),opposants.dansLOrdre().get(2),opposants.dansLOrdre().get(1),opposants.dansLOrdre().get(3));
     joueursDansLOrdre.forEach(joueur -> joueur.main().jeterTout());
 
     while (true) {

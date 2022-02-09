@@ -23,8 +23,9 @@ public class Participants {
     return dansLOrdre.get(0);
   }
 
+
   public Joueur adversaireDe(Joueur joueurParlant) {
-    return joueurParlant == premier() ? dansLOrdre.get(1) : premier();
+    return joueurParlant == premier() ? dansLOrdre.get(1) : premier(); //Modification
   }
 
   public Iterable<Joueur> dansLOrdre() {

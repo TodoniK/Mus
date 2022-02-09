@@ -3,6 +3,7 @@ package com.montaury.mus.jeu.tour.phases;
 import com.montaury.mus.jeu.carte.Carte;
 import com.montaury.mus.jeu.carte.Defausse;
 import com.montaury.mus.console.AffichageEvenements;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.InterfaceJoueur;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.Opposants;
@@ -27,19 +28,29 @@ class MusTest {
     mus = new Mus(paquetEntierCroissant(), defausse, new AffichageEvenements(joueurEsku));
     interfaceJoueurEsku = mock(InterfaceJoueur.class);
     interfaceJoueurZaku = mock(InterfaceJoueur.class);
+    interfaceJoueurAllie = mock(InterfaceJoueur.class);
+    interfaceJoueurAdverse = mock(InterfaceJoueur.class);
     joueurEsku = new Joueur("J1", interfaceJoueurEsku);
     joueurZaku = new Joueur("J2", interfaceJoueurZaku);
-    opposants = new Opposants(joueurEsku, joueurZaku);
+    joueurAllie = new Joueur("J3", interfaceJoueurAllie);
+    joueurAdverse = new Joueur("J4", interfaceJoueurAdverse);
+    equipe1 = new Equipe (1,joueurEsku, joueurAllie);
+    equipe2 = new Equipe (2, joueurZaku,joueurAdverse);
+    opposants = new Opposants(equipe1,equipe2);
   }
 
   @Test
   void devrait_distribuer_quatre_cartes_a_chaque_joueur() {
-    when(interfaceJoueurEsku.faireChoixParmi(anyList())).thenReturn(new Mintza());
+    when(joueurEsku.interfaceJoueur.faireChoixParmi(anyList())).thenReturn(new Mintza());
 
     mus.jouer(opposants);
 
     assertThat(joueurEsku.main().cartes()).containsExactly(Carte.AS_BATON, Carte.AS_COUPE, Carte.AS_EPEE, Carte.AS_PIECE);
-    assertThat(joueurZaku.main().cartes()).containsExactly(Carte.DEUX_BATON, Carte.DEUX_COUPE, Carte.DEUX_EPEE, Carte.DEUX_PIECE);
+    assertThat(joueurAllie.main().cartes()).containsExactly(Carte.DEUX_BATON, Carte.DEUX_COUPE, Carte.DEUX_EPEE, Carte.DEUX_PIECE);
+    assertThat(joueurAdverse.main().cartes()).containsExactly(Carte.TROIS_BATON, Carte.TROIS_COUPE, Carte.TROIS_EPEE, Carte.TROIS_PIECE);
+    assertThat(joueurZaku.main().cartes()).containsExactly(Carte.QUATRE_BATON, Carte.QUATRE_COUPE, Carte.QUATRE_EPEE, Carte.QUATRE_PIECE);
+
+
   }
 
   @Test
@@ -100,8 +111,14 @@ class MusTest {
   private Mus mus;
   private InterfaceJoueur interfaceJoueurEsku;
   private InterfaceJoueur interfaceJoueurZaku;
+  private InterfaceJoueur interfaceJoueurAllie;
+  private InterfaceJoueur interfaceJoueurAdverse;
   private Joueur joueurEsku;
   private Joueur joueurZaku;
+  private Joueur joueurAllie;
+  private Joueur joueurAdverse;
+  private Equipe equipe1;
+  private Equipe equipe2;
   private Opposants opposants;
   private Defausse defausse;
 }

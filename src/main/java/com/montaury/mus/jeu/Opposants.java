@@ -14,8 +14,8 @@ public class Opposants {
 
   public Opposants(Equipe equipe1,Equipe equipe2) {
 
-    this.equipe1 = equipe1;
-    this.equipe2 = equipe2;
+    this.setEquipe1(equipe1);
+    this.setEquipe2(equipe2);
     this.fileJoueurs.add(equipe1.getJoueur1());
     this.fileJoueurs.add(equipe2.getJoueur2());
     this.fileJoueurs.add(equipe1.getJoueur2());
@@ -45,7 +45,7 @@ public class Opposants {
     fileJoueurs.add(pos2);
     fileJoueurs.add(pos3);
     fileJoueurs.add(pos4);
-    return List.of(pos1, pos2, pos3, pos3);
+    return List.of(pos1, pos2, pos3, pos4);
   }
 
   public Equipe getEquipe1() {
