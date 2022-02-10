@@ -1,6 +1,8 @@
 package com.montaury.mus.jeu.tour.phases.dialogue;
 
+import com.montaury.mus.jeu.Opposants;
 import com.montaury.mus.jeu.evenements.Evenements;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.tour.phases.Participants;
 import com.montaury.mus.jeu.tour.phases.dialogue.choix.Hordago;
@@ -36,30 +38,42 @@ class DialogueTest {
 
   @Test
   void est_termine_si_le_dernier_choix_est_tira() {
-    Joueur joueur1 = unJoueurFaisantChoix(new Paso(), new Tira());
-    Joueur joueur2 = unJoueurFaisantChoix(new Imido());
-
-    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(List.of(joueur1, joueur2)));
+    Joueur joueurEsku = unJoueurFaisantChoix(new Paso(), new Tira());
+    Joueur joueurAdverse2 = unJoueurFaisantChoix(new Imido());
+    Joueur joueurAllie = unJoueurFaisantChoix(new Tira());
+    Joueur joueurZaku = unJoueurFaisantChoix(new Tira());
+    var equipe1 = new Equipe(1,joueurEsku,joueurAllie);
+    var equipe2 = new Equipe (2,joueurZaku,joueurAdverse2);
+    var opposants = new Opposants(equipe1,equipe2);
+    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(opposants.dansLOrdre()));
 
     assertThat(recapitulatif.pointsEngages()).isOne();
   }
 
   @Test
   void est_termine_si_le_dernier_choix_est_idoki() {
-    Joueur joueur1 = unJoueurFaisantChoix(new Paso(), new Idoki());
-    Joueur joueur2 = unJoueurFaisantChoix(new Imido());
-
-    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(List.of(joueur1, joueur2)));
+    Joueur joueurEsku = unJoueurFaisantChoix(new Paso(), new Idoki());
+    Joueur joueurAdverse2 = unJoueurFaisantChoix(new Imido());
+    Joueur joueurAllie = unJoueurFaisantChoix(new Tira());
+    Joueur joueurZaku = unJoueurFaisantChoix(new Tira());
+    var equipe1 = new Equipe(1,joueurEsku,joueurAllie);
+    var equipe2 = new Equipe (2,joueurZaku,joueurAdverse2);
+    var opposants = new Opposants(equipe1,equipe2);
+    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(opposants.dansLOrdre()));
 
     assertThat(recapitulatif.pointsEngages()).isEqualTo(2);
   }
 
   @Test
   void est_termine_si_le_dernier_choix_est_kanta() {
-    Joueur joueur1 = unJoueurFaisantChoix(new Paso(), new Kanta());
-    Joueur joueur2 = unJoueurFaisantChoix(new Hordago());
-
-    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(List.of(joueur1, joueur2)));
+    Joueur joueurEsku = unJoueurFaisantChoix(new Paso(), new Kanta());
+    Joueur joueurAdverse2 = unJoueurFaisantChoix(new Hordago());
+    Joueur joueurAllie = unJoueurFaisantChoix(new Tira());
+    Joueur joueurZaku = unJoueurFaisantChoix(new Tira());
+    var equipe1 = new Equipe(1,joueurEsku,joueurAllie);
+    var equipe2 = new Equipe (2,joueurZaku,joueurAdverse2);
+    var opposants = new Opposants(equipe1,equipe2);
+    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(opposants.dansLOrdre()));
 
     assertThat(recapitulatif.pointsEngages()).isEqualTo(40);
   }

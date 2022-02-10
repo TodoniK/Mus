@@ -16,7 +16,13 @@ public class Participants {
   }
 
   public boolean estUnique() {
-    return dansLOrdre.size() == 1;
+    if (dansLOrdre.size()==1){return true;}
+    else if (dansLOrdre.size()==2)
+    {
+      if (dansLOrdre.get(0).getEquipe()==dansLOrdre.get(1).getEquipe()){return true;}
+      else {return false;}
+    }
+    else{return false;}
   }
 
   public Joueur premier() {
@@ -24,8 +30,18 @@ public class Participants {
   }
 
 
+  public Joueur allieDe(Joueur joueurParlant) {
+    if(joueurParlant.getEquipe().getJoueur1()==joueurParlant){return joueurParlant.getEquipe().getJoueur2();}
+    else{return joueurParlant.getEquipe().getJoueur1();}
+  }
   public Joueur adversaireDe(Joueur joueurParlant) {
-    return joueurParlant == premier() ? dansLOrdre.get(1) : premier(); //Modification
+    int i;
+    for (i = 0; i < dansLOrdre.size(); i++)
+    {
+      if (joueurParlant.getEquipe()!=dansLOrdre.get(i).getEquipe())
+      {break;}
+    }
+    return dansLOrdre.get(i);
   }
 
   public Iterable<Joueur> dansLOrdre() {

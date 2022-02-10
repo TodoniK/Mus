@@ -13,9 +13,32 @@ class GrandTest {
   void devrait_faire_gagner_le_joueur_esku_s_il_a_la_plus_grande_carte() {
     Main mainJoueurEsku = main(Carte.AS_BATON, Carte.CINQ_PIECE, Carte.CAVALIER_BATON, Carte.SIX_COUPE);
     Main mainJoueurZaku = main(Carte.DEUX_BATON, Carte.TROIS_PIECE, Carte.SEPT_BATON, Carte.AS_PIECE);
+    Main mainJoueurAllie = main(Carte.AS_BATON, Carte.AS_PIECE, Carte.ROI_BATON, Carte.TROIS_PIECE);
+    Main mainJoueurAdverse = main(Carte.DEUX_BATON, Carte.TROIS_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE);
+    boolean mainEskuEstMeilleure;
+    if (grand.mainEskuEstMeilleure(mainJoueurEsku, mainJoueurAllie))
+    {
+      if (grand.mainEskuEstMeilleure(mainJoueurZaku,mainJoueurAdverse))
+      {
+        mainEskuEstMeilleure=grand.mainEskuEstMeilleure(mainJoueurEsku, mainJoueurZaku);
+      }
+      else
+      {
+        mainEskuEstMeilleure=grand.mainEskuEstMeilleure(mainJoueurEsku, mainJoueurAdverse);
+      }
+    }
+    else
+    {
+      if (grand.mainEskuEstMeilleure(mainJoueurZaku,mainJoueurAdverse))
+      {
+        mainEskuEstMeilleure=grand.mainEskuEstMeilleure(mainJoueurAllie, mainJoueurZaku);
+      }
+      else
+      {
+        mainEskuEstMeilleure=grand.mainEskuEstMeilleure(mainJoueurAllie, mainJoueurAdverse);
+      }
 
-    boolean mainEskuEstMeilleure = grand.mainEskuEstMeilleure(mainJoueurEsku, mainJoueurZaku);
-
+    }
     assertThat(mainEskuEstMeilleure).isTrue();
   }
   @Test

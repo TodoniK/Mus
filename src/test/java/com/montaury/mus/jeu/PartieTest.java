@@ -24,8 +24,12 @@ class PartieTest {
 
   @Test
   void devrait_faire_gagner_le_premier_joueur_a_3_manches() {
-    var equipe1 = new Equipe (1,unJoueurFaisantChoix(new Mintza(), new Hordago(), new Mintza(), new Hordago(), new Mintza(), new Hordago(), new Mintza(), new Hordago(), new Mintza(), new Hordago()),unJoueurFaisantChoix(new Kanta(), new Mus(), new Paso(), new Kanta(), new Kanta(), new Mus(), new Paso(), new Kanta(), new Kanta()));
-    var equipe2 = new Equipe(2,unJoueurFaisantChoix(new Kanta(), new Mus(), new Paso(), new Kanta(), new Kanta(), new Mus(), new Paso(), new Kanta(), new Kanta()),unJoueurFaisantChoix(new Kanta(), new Mus(), new Paso(), new Kanta(), new Kanta(), new Mus(), new Paso(), new Kanta(), new Kanta()));
+    var joueurEsku = unJoueurFaisantChoix(new Mintza(), new Hordago(), new Kanta(),new Mintza(),new Hordago());
+    var joueurAdverse = unJoueurFaisantChoix(new Kanta(), new Mintza(), new Hordago(),new Kanta());
+    var joueurAllie = unJoueurFaisantChoix(new Kanta(), new Mintza(), new Hordago());
+    var joueurZaku = unJoueurFaisantChoix(new Kanta(),new Mintza(), new Hordago());
+    var equipe1 = new Equipe (1,joueurEsku,joueurAllie);
+    var equipe2 = new Equipe(2,joueurZaku,joueurAdverse);
 
     var opposants = new Opposants(equipe1,equipe2);
 
