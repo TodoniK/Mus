@@ -32,7 +32,7 @@ public abstract class Phase {
       return Phase.Resultat.nonJouable();
     }
     if (participants.estUnique()) {
-      Joueur premier = participants.premier();
+      Joueur premier = participants. premier();
       return Phase.Resultat.termine(premier.getEquipe(), 0, pointsBonus(premier));
     }
     var resultat = new Dialogue(affichage).derouler(participants);
