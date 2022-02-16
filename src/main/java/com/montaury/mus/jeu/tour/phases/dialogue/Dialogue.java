@@ -57,28 +57,33 @@ public class Dialogue {
     }
 
     private final Participants participants;
-    private Iterator<Joueur> joueursDevantParler;
+    private List<Joueur> joueursDevantParler;
     private List<TypeChoix> prochainsChoixPossibles = TypeChoix.INITIAUX;
     private Joueur joueurParlant;
 
     public Deroulement(Participants participants) {
       this.participants = participants;
-      this.joueursDevantParler = participants.dansLOrdre().iterator();
+      this.joueursDevantParler = participants.dansLOrdre();
     }
 
-    private Deroulement(Participants participants, Iterator<Joueur> joueursDevantParler, List<TypeChoix> prochainsChoixPossibles) {
+    private Deroulement(Participants participants, List<Joueur> joueursDevantParler, List<TypeChoix> prochainsChoixPossibles) {
       this.participants = participants;
       this.joueursDevantParler = joueursDevantParler;
       this.prochainsChoixPossibles = prochainsChoixPossibles;
     }
 
     public Joueur prochainJoueur() {
-      joueurParlant = joueursDevantParler.next();
+      int i;
+      for (i = 1 ; i<joueursDevantParler.size();i++)
+      {
+        if (joueurParlant==joueursDevantParler.get(i-1)){break;}
+      }
+      joueurParlant = joueursDevantParler.get(i);
       return joueurParlant;
     }
 
     public boolean estTermine() {
-      return !joueursDevantParler.hasNext();
+      return joueursDevantParler.isEmpty();
     }
 
     public List<TypeChoix> choixPossibles() {
@@ -86,10 +91,11 @@ public class Dialogue {
     }
 
     public Deroulement basculerSurAdversaire(List<TypeChoix> prochainsChoixPossibles) {
-      joueursDevantParler = Collections.singletonList(participants.adversaireDe(joueurParlant)).iterator();
+      joueursDevantParler = participants.adversairesDe(joueurParlant,joueursDevantParler);
       this.prochainsChoixPossibles = prochainsChoixPossibles;
       return this;
     }
+
 
     public Deroulement retirerJoueurParlant() {
       return new Deroulement(participants.retirer(joueurParlant), joueursDevantParler, prochainsChoixPossibles);

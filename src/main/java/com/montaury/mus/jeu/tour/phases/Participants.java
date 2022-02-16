@@ -30,21 +30,22 @@ public class Participants {
   }
 
 
-  public Joueur allieDe(Joueur joueurParlant) {
-    if(joueurParlant.getEquipe().getJoueur1()==joueurParlant){return joueurParlant.getEquipe().getJoueur2();}
-    else{return joueurParlant.getEquipe().getJoueur1();}
-  }
-  public Joueur adversaireDe(Joueur joueurParlant) {
+
+  public List<Joueur> adversairesDe(Joueur joueurParlant, List<Joueur>joueurs) {
     int i;
-    for (i = 0; i < dansLOrdre.size(); i++)
+    List<Joueur> listeAdversaires = new ArrayList<>();
+    for (i = 0; i < joueurs.size(); i++)
     {
-      if (joueurParlant.getEquipe()!=dansLOrdre.get(i).getEquipe())
-      {break;}
+      if (joueurParlant.getEquipe()!=joueurs.get(i).getEquipe())
+      {
+        listeAdversaires.add(joueurs.get(i));
+      }
     }
-    return dansLOrdre.get(i);
+    return listeAdversaires;
   }
 
-  public Iterable<Joueur> dansLOrdre() {
+
+  public List<Joueur> dansLOrdre() {
     return dansLOrdre;
   }
 
