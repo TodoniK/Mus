@@ -1,3 +1,4 @@
+
 package com.montaury.mus.jeu.tour.phases.dialogue;
 
 import com.montaury.mus.jeu.Manche;
@@ -73,17 +74,13 @@ public class Dialogue {
     }
 
     public Joueur prochainJoueur() {
-      int i;
-      for (i = 1 ; i<joueursDevantParler.size();i++)
-      {
-        if (joueurParlant==joueursDevantParler.get(i-1)){break;}
-      }
-      joueurParlant = joueursDevantParler.get(i);
+     joueurParlant = joueursDevantParler.remove(0);
       return joueurParlant;
     }
 
     public boolean estTermine() {
-      return joueursDevantParler.isEmpty();
+      return(joueursDevantParler.isEmpty());
+
     }
 
     public List<TypeChoix> choixPossibles() {
@@ -91,11 +88,10 @@ public class Dialogue {
     }
 
     public Deroulement basculerSurAdversaire(List<TypeChoix> prochainsChoixPossibles) {
-      joueursDevantParler = participants.adversairesDe(joueurParlant,joueursDevantParler);
+      joueursDevantParler = participants.adversaireDe(joueurParlant);
       this.prochainsChoixPossibles = prochainsChoixPossibles;
       return this;
     }
-
 
     public Deroulement retirerJoueurParlant() {
       return new Deroulement(participants.retirer(joueurParlant), joueursDevantParler, prochainsChoixPossibles);

@@ -29,21 +29,18 @@ public class Participants {
     return dansLOrdre.get(0);
   }
 
-
-
-  public List<Joueur> adversairesDe(Joueur joueurParlant, List<Joueur>joueurs) {
+  public List<Joueur> adversaireDe(Joueur joueurParlant) {
     int i;
-    List<Joueur> listeAdversaires = new ArrayList<>();
-    for (i = 0; i < joueurs.size(); i++)
+    List<Joueur> adversaires = new ArrayList<>();
+    for(i=0;i<dansLOrdre.size();i++)
     {
-      if (joueurParlant.getEquipe()!=joueurs.get(i).getEquipe())
+      if(dansLOrdre.get(i).getEquipe()!=joueurParlant.getEquipe())
       {
-        listeAdversaires.add(joueurs.get(i));
+        adversaires.add(dansLOrdre.get(i));
       }
     }
-    return listeAdversaires;
+    return adversaires;
   }
-
 
   public List<Joueur> dansLOrdre() {
     return dansLOrdre;

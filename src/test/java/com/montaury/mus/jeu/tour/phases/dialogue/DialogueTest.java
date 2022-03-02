@@ -5,12 +5,8 @@ import com.montaury.mus.jeu.evenements.Evenements;
 import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.tour.phases.Participants;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Hordago;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Idoki;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Imido;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Kanta;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Paso;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Tira;
+import com.montaury.mus.jeu.tour.phases.dialogue.choix.*;
+
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,5 +74,25 @@ class DialogueTest {
     assertThat(recapitulatif.pointsEngages()).isEqualTo(40);
   }
   private Dialogue dialogue;
+  @Test
+  void le_joueur_allie_interroge_si_tira()
 
+  {
+    Joueur joueurEsku = unJoueurFaisantChoix(new Paso(),new Tira());
+    Joueur joueurAdverse2 = unJoueurFaisantChoix(new Imido(),new Tira());
+    Joueur joueurAllie = unJoueurFaisantChoix(new Gehiago(10));
+    Joueur joueurZaku = unJoueurFaisantChoix(new Idoki());
+
+    var equipe1 = new Equipe(1,joueurEsku,joueurAllie);
+    var equipe2 = new Equipe (2,joueurZaku,joueurAdverse2);
+
+
+
+    var opposants = new Opposants(equipe1,equipe2);
+
+    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(opposants.dansLOrdre()));
+
+    assertThat(recapitulatif.pointsEngages()).isEqualTo(12);
+
+  }
 }
