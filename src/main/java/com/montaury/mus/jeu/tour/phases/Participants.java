@@ -2,6 +2,7 @@ package com.montaury.mus.jeu.tour.phases;
 
 import com.montaury.mus.jeu.joueur.Joueur;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 public class Participants {
@@ -29,17 +30,15 @@ public class Participants {
     return dansLOrdre.get(0);
   }
 
-  public List<Joueur> adversaireDe(Joueur joueurParlant) {
-    int i;
-    List<Joueur> adversaires = new ArrayList<>();
-    for(i=0;i<dansLOrdre.size();i++)
+  public Deque<Joueur> adversaireDe(Joueur joueurParlant, Deque<Joueur> equipe1, Deque <Joueur> equipe2) {
+    if(equipe1.contains(joueurParlant) )
     {
-      if(dansLOrdre.get(i).getEquipe()!=joueurParlant.getEquipe())
-      {
-        adversaires.add(dansLOrdre.get(i));
-      }
+      return equipe2;
     }
-    return adversaires;
+    else
+    {
+      return equipe1;
+    }
   }
 
   public List<Joueur> dansLOrdre() {
