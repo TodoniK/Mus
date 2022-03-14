@@ -6,7 +6,6 @@ import com.montaury.mus.jeu.carte.Carte;
 import com.montaury.mus.jeu.carte.Defausse;
 import com.montaury.mus.jeu.evenements.Evenements;
 import com.montaury.mus.jeu.joueur.Equipe;
-import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.tour.phases.dialogue.choix.Gehiago;
 import com.montaury.mus.jeu.tour.phases.dialogue.choix.Hordago;
 import com.montaury.mus.jeu.tour.phases.dialogue.choix.Idoki;
@@ -33,19 +32,18 @@ class TourTest {
   }
   @Test
   void le_joueur_allie_devrait_aller_Idoki_si_son_cohequipier_va_Tira() {
-    var joueurEsku = unJoueurFaisantChoix(new Mintza(), new Paso(), new Tira(), new Paso(), new Tira(), new Paso(), new Tira(), new Paso(), new Tira());
-    var joueurZaku = unJoueurFaisantChoix(new Tira());
-    var joueurAdverse = unJoueurFaisantChoix(new Imido());
+    var joueurEsku = unJoueurFaisantChoix(new Mintza(), new Paso(), new Tira());
+    var joueurAdverse = unJoueurFaisantChoix(new Imido(2));
     var joueurAllie = unJoueurFaisantChoix(new Idoki());
+    var joueurZaku = unJoueurFaisantChoix(new Tira());
     var equipe1 = new Equipe(1, joueurEsku, joueurAllie);
     var equipe2 = new Equipe(2, joueurZaku, joueurAdverse);
     var opposants = new Opposants(equipe1, equipe2);
     var score = new Manche.Score(opposants);
 
     tour.jouer(opposants, score);
-    assertThat(score.vainqueur()).isEmpty();
     assertThat(score.scoreParEquipe()).containsEntry(equipe1, 0);
-    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 8);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 2);
   }
   @Test
   void devrait_donner_tous_les_points_au_joueur_esku_si_le_joueur_zaku_fait_tira() {

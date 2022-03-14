@@ -1,7 +1,9 @@
 package com.montaury.mus.jeu.tour.phases.dialogue;
 
 import com.montaury.mus.jeu.Manche;
+import com.montaury.mus.jeu.Opposants;
 import com.montaury.mus.jeu.evenements.Evenements;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.tour.phases.Participants;
 import com.montaury.mus.jeu.tour.phases.dialogue.choix.Choix;
@@ -54,32 +56,46 @@ public class Dialogue {
       return new Deroulement(new Participants(Collections.emptyList()));
     }
 
-    private final Participants participants;
+
     private Deque<Joueur> joueursDevantParler;
+    private Participants participants;
     private List<TypeChoix> prochainsChoixPossibles = TypeChoix.INITIAUX;
     private Joueur joueurParlant;
     private Deque<Joueur> joueursEnCourseEquipe1=new ArrayDeque<>();
     private Deque<Joueur> joueursEnCourseEquipe2=new ArrayDeque<>();
 
+
+
     public Deroulement(Participants participants) {
+
       this.participants = participants;
-      this.joueursDevantParler = new ArrayDeque<>(participants.dansLOrdre());
-      this.joueursEnCourseEquipe1.add(participants.dansLOrdre().get(0));
-      this.joueursEnCourseEquipe1.add(participants.dansLOrdre().get(2));
-      this.joueursEnCourseEquipe2.add(participants.dansLOrdre().get(1));
-      this.joueursEnCourseEquipe2.add(participants.dansLOrdre().get(3));
-      ;
+      if (participants.dansLOrdre().isEmpty())
+      {
+        this.joueursDevantParler = new ArrayDeque<>(participants.dansLOrdre());
+      }
+      else {
+
+        for (int i = 0; i < participants.dansLOrdre().size(); i++) {
+          if (participants.dansLOrdre().get(i).getEquipe().getNum() == 1) {
+            this.joueursEnCourseEquipe1.add(participants.dansLOrdre().get(i));
+          } else {
+            this.joueursEnCourseEquipe2.add(participants.dansLOrdre().get(i));
+          }
+        }
+
+        this.joueursDevantParler = new ArrayDeque<>(participants.dansLOrdre());
+      }
 
     }
 
     private Deroulement(Participants participants, Deque<Joueur> joueursDevantParler, List<TypeChoix> prochainsChoixPossibles) {
-      this.participants = participants;
+      this.participants = new Participants(participants.dansLOrdre());
       this.joueursDevantParler = joueursDevantParler;
       this.prochainsChoixPossibles = prochainsChoixPossibles;
     }
 
     public Joueur prochainJoueur() {
-      joueurParlant = joueursDevantParler.getFirst();
+      joueurParlant = joueursDevantParler.remove();
       return joueurParlant;
     }
 
@@ -92,13 +108,14 @@ public class Dialogue {
     }
 
     public Deroulement basculerSurAdversaire(List<TypeChoix> prochainsChoixPossibles) {
-      joueursDevantParler = participants.adversaireDe(joueurParlant,joueursEnCourseEquipe1,joueursEnCourseEquipe2);
+
+      joueursDevantParler = new ArrayDeque<>(participants.adversairesDe(joueurParlant,joueursEnCourseEquipe1,joueursEnCourseEquipe2));
       this.prochainsChoixPossibles = prochainsChoixPossibles;
       return this;
     }
 
     public Deroulement retirerJoueurParlant() {
-      return new Deroulement(participants.retirer(joueurParlant), joueursDevantParler, prochainsChoixPossibles);
+      return new Deroulement(participants.retirer(joueurParlant,joueursEnCourseEquipe1,joueursEnCourseEquipe2), joueursDevantParler, prochainsChoixPossibles);
     }
   }
 

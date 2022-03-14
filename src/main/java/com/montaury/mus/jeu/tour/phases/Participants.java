@@ -1,6 +1,8 @@
 package com.montaury.mus.jeu.tour.phases;
 
 import com.montaury.mus.jeu.joueur.Joueur;
+
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -8,8 +10,11 @@ import java.util.List;
 public class Participants {
   private final List<Joueur> dansLOrdre;
 
+
+
   public Participants(List<Joueur> dansLOrdre) {
     this.dansLOrdre = dansLOrdre;
+
   }
 
   public boolean aucun() {
@@ -30,23 +35,34 @@ public class Participants {
     return dansLOrdre.get(0);
   }
 
-  public Deque<Joueur> adversaireDe(Joueur joueurParlant, Deque<Joueur> equipe1, Deque <Joueur> equipe2) {
-    if(equipe1.contains(joueurParlant) )
-    {
-      return equipe2;
-    }
-    else
-    {
-      return equipe1;
+  public Deque<Joueur> adversairesDe(Joueur joueurParlant,Deque<Joueur>Equipe1,Deque<Joueur>Equipe2) {
+    if (Equipe1.contains(joueurParlant)) {
+      return Equipe2;
+    } else {
+      return Equipe1;
     }
   }
+
+
 
   public List<Joueur> dansLOrdre() {
     return dansLOrdre;
   }
 
-  public Participants retirer(Joueur joueur) {
+  public Participants retirer(Joueur joueur,Deque<Joueur> Equipe1, Deque<Joueur>Equipe2) {
+
     var joueurs = new ArrayList<>(dansLOrdre);
+
+    if(Equipe1.contains(joueur) )
+    {
+      Equipe1.remove(joueur);
+
+    }
+    else
+    {
+      Equipe2.remove(joueur);
+    }
+
     joueurs.remove(joueur);
     return new Participants(joueurs);
   }

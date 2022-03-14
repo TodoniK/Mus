@@ -81,7 +81,7 @@ class DialogueTest {
     Joueur joueurEsku = unJoueurFaisantChoix(new Paso(),new Tira());
     Joueur joueurAdverse2 = unJoueurFaisantChoix(new Imido(),new Tira());
     Joueur joueurAllie = unJoueurFaisantChoix(new Gehiago(10));
-    Joueur joueurZaku = unJoueurFaisantChoix(new Idoki());
+    Joueur joueurZaku = unJoueurFaisantChoix(new Tira());
 
     var equipe1 = new Equipe(1,joueurEsku,joueurAllie);
     var equipe2 = new Equipe (2,joueurZaku,joueurAdverse2);
@@ -92,7 +92,7 @@ class DialogueTest {
 
     Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(opposants.dansLOrdre()));
 
-    assertThat(recapitulatif.pointsEngages()).isEqualTo(12);
+    assertThat(recapitulatif.pointsEngages()).isEqualTo(1);
 
   }
 }

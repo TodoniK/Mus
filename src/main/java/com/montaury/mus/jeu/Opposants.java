@@ -24,8 +24,8 @@ public class Opposants {
   }
 
   public void tourner() {
-    var tmp = this.fileJoueurs.remove();
-    this.fileJoueurs.add(tmp);
+    var tmp = this.fileJoueurs.removeFirst();
+    this.fileJoueurs.addLast(tmp);
   }
 
   public Joueur joueurEsku() {
@@ -37,14 +37,18 @@ public class Opposants {
   }
 
   public List<Joueur> dansLOrdre() {
-    var pos1 = fileJoueurs.remove();
-    var pos2 = fileJoueurs.remove();
-    var pos3 = fileJoueurs.remove();
-    var pos4 = fileJoueurs.remove();
-    fileJoueurs.add(pos1);
-    fileJoueurs.add(pos2);
-    fileJoueurs.add(pos3);
-    fileJoueurs.add(pos4);
+
+
+    fileJoueurs.add(equipe1.getJoueur1());
+    fileJoueurs.add(equipe2.getJoueur2());
+    fileJoueurs.add(equipe1.getJoueur2());
+    fileJoueurs.add(equipe2.getJoueur1());
+
+    var Copie = new ArrayDeque<>(fileJoueurs);
+    var pos1 = Copie.remove();
+    var pos2 = Copie.remove();
+    var pos3 = Copie.remove();
+    var pos4 = Copie.remove();
     return List.of(pos1, pos2, pos3, pos4);
   }
 

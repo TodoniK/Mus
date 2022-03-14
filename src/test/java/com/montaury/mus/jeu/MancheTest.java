@@ -2,12 +2,7 @@ package com.montaury.mus.jeu;
 
 import com.montaury.mus.jeu.evenements.Evenements;
 import com.montaury.mus.jeu.joueur.Equipe;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Gehiago;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Hordago;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Imido;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Kanta;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Mintza;
-import com.montaury.mus.jeu.tour.phases.dialogue.choix.Tira;
+import com.montaury.mus.jeu.tour.phases.dialogue.choix.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,10 +30,11 @@ class MancheTest {
 
   @Test
   void devrait_terminer_la_manche_si_un_joueur_a_40_points() {
-    var equipe1 = new Equipe (1,unJoueurFaisantChoix(new Mintza(), new Imido(), new Gehiago(2)),unJoueurFaisantChoix(new Mintza(), new Imido(), new Gehiago(2)));
-    var equipe2 =new Equipe (2,unJoueurFaisantChoix(new Gehiago(40), new Tira()),unJoueurFaisantChoix(new Gehiago(40), new Tira())) ;
+    var equipe1 = new Equipe (1,unJoueurFaisantChoix(new Mintza(), new Paso()),unJoueurFaisantChoix(new Gehiago(40)));
+    var equipe2 =new Equipe (2,unJoueurFaisantChoix(new Tira()),unJoueurFaisantChoix(new Paso(), new Idoki())) ;
+    var opposants = new Opposants(equipe1, equipe2);
 
-    var resultat = manche.jouer(new Opposants(equipe1, equipe2));
+    var resultat = manche.jouer(opposants);
 
     assertThat(resultat.vainqueur()).isEqualTo(equipe1);
     assertThat(resultat.pointsVaincu()).isZero();
