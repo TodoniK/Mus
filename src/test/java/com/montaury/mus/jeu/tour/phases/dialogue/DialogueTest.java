@@ -24,12 +24,16 @@ class DialogueTest {
 
   @Test
   void engage_un_point_si_les_2_participants_sont_paso() {
-    Joueur joueur1 = unJoueurFaisantChoix(new Paso());
-    Joueur joueur2 = unJoueurFaisantChoix(new Paso());
+    Joueur joueurEsku = unJoueurFaisantChoix(new Paso());
+    Joueur joueurAdverse2 = unJoueurFaisantChoix(new Imido());
+    Joueur joueurAllie = unJoueurFaisantChoix(new Paso());
+    Joueur joueurZaku = unJoueurFaisantChoix(new Idoki());
+    var equipe1 = new Equipe(1,joueurEsku,joueurAllie);
+    var equipe2 = new Equipe (2,joueurZaku,joueurAdverse2);
+    var opposants = new Opposants(equipe1,equipe2);
+    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(opposants.dansLOrdre()));
 
-    Dialogue.Recapitulatif recapitulatif = dialogue.derouler(new Participants(List.of(joueur1, joueur2)));
-
-    assertThat(recapitulatif.pointsEngages()).isOne();
+    assertThat(recapitulatif.pointsEngages()).isEqualTo(1);
   }
 
   @Test
