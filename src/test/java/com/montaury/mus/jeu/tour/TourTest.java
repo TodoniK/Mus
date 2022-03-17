@@ -30,6 +30,8 @@ class TourTest {
     evenementsDeJeu = mock(Evenements.class);
     tour = new Tour(evenementsDeJeu, paquetEntierCroissant(), new Defausse());
   }
+  
+  /*
   @Test
   void le_joueur_allie_devrait_aller_Idoki_si_son_cohequipier_va_Tira() {
     var joueurEsku = unJoueurFaisantChoix(new Mintza(), new Paso(), new Tira());
@@ -45,6 +47,8 @@ class TourTest {
     assertThat(score.scoreParEquipe()).containsEntry(equipe1, 0);
     assertThat(score.scoreParEquipe()).containsEntry(equipe2, 2);
   }
+  */
+  
   @Test
   void devrait_donner_tous_les_points_au_joueur_esku_si_le_joueur_zaku_fait_tira() {
     var joueurEsku = unJoueurFaisantChoix(new Mintza(), new Imido(), new Imido(), new Imido(), new Imido());
